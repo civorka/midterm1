@@ -1,0 +1,89 @@
+//MİDTERM Q1
+#define RCCAHB1EN *((unsigned volatile int *) 0x40023830)
+#define gpiomodregister *((unsigned volatile int *) 0x40020c00)
+#define gpiodataregister *((unsigned volatile int *) 0x40020c14)
+void delay(){ 	//User Created Function for blink Delay
+	int delay0 = 0x000FFFFF;
+	while (delay0--){  //Until count down reaches zero will wait here
+		}
+}
+void init_leds () {
+	 	RCCAHB1EN = 0x8; //CLOCK GATE
+}
+void turn_name_on(){
+	unsigned char namestr[]={'C','I','V','A','N'};
+	unsigned int name=0;
+	int namemod;
+	int i;
+	  for(i=0;i<5;i++){
+	        name=name+namestr[i];
+	}
+	  namemod=name%4;
+	   if(namemod==0){//red
+		   gpiomodregister = 0x10000000u;
+		   gpiodataregister = 0x4000u;
+}
+	   else if(namemod==1){//blue
+		   gpiomodregister = 0x40000000u;
+		   gpiodataregister = 0x8000u;
+	   }
+	   else if(namemod==2){//orange
+		   gpiomodregister = 0x4000000u;
+		   gpiodataregister = 0x2000u;
+	   }
+	   else if(namemod==3){//grenn
+		   gpiomodregister = 0x1000000u;
+		   gpiodataregister = 0x1000u  ;
+	   }
+	   }
+void turn_surname_on(){
+	unsigned char surnamestr[]={'O','L','G','U','N','E','R'};
+	unsigned int surname=0;
+	int surnamemod;
+	int j;
+	 for(j=0;j<7;j++){
+		        surname=surname+surnamestr[j];
+		}
+		  surnamemod=surname%4;
+		   if(surnamemod==0){//red
+			   gpiomodregister = 0x10000000u;
+			   gpiodataregister = 0x4000u;
+	}
+		   else if(surnamemod==1){//blue
+			   gpiomodregister = 0x40000000u;
+			   gpiodataregister = 0x8000u;
+		   }
+		   else if(surnamemod==2){//orange
+			   gpiomodregister = 0x4000000u;
+			   gpiodataregister = 0x2000u;
+		   }
+		   else if(surnamemod==3){//grenn
+			   gpiomodregister = 0x1000000u;
+			   gpiodataregister = 0x1000u  ;
+		   }
+}
+void turn_name_off(){
+		gpiodataregister=0x0000u;
+}
+void turn_surname_off(){
+		gpiodataregister=0x0000u;
+}
+
+int main(){
+init_leds();
+int i;
+int j;
+for(i=0;i<5;i++){
+turn_name_on();
+delay();
+turn_name_off();
+delay();
+}
+for(j=0;j<7;j++){
+turn_surname_on();
+delay();
+turn_surname_off();
+delay();
+}
+return 0;
+}
